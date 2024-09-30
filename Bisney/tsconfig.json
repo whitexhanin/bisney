@@ -1,0 +1,37 @@
+{
+  // "files": [], 
+  // "extends": "../tsconfig.json",
+  // "include": ["src", "vite.config.ts"],
+  "compilerOptions": {    
+    "composite": true,
+    "baseUrl": "./",
+    "paths" : {      
+      "@/*" : ["./src/*"],
+      "node_modules/*":["./node_modules/*"]
+    }    
+  },
+  "include": ["src"],  
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ],
+
+}
+
+// {
+//   "extends": "../tsconfig.json",
+//   "include": ["src", "vite.config.ts"],
+//   "compilerOptions": {
+//     "esModuleInterop": true,
+//     "allowJs": true,
+//     "checkJs": true,
+//     "jsx": "react-jsx",
+//     "lib": ["dom", "es2018"],
+//     "module": "esnext",
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["src/*"]
+//     },
+//     "types": ["vite/client"]
+//   }
+// }
