@@ -1,18 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import Login from "@/pages/LogIn";
-import SignUp from "@/pages/SignUp";
-import Home from "@/pages/Home";
-import Search from "@/pages/Search";
-import Profile from "@/pages/Profile";
-// import Download from "../../pages/Download";
-import Download from "@/pages/Download";
-// import Download from "@/pages/Download";
 import loadable from "@loadable/component";
-// const Download = loadable(()=> import('@'))
+
+const Download = loadable(()=> import('@/pages/Download'));
+const Login = loadable(()=> import('@/pages/LogIn'));
+const SignUp = loadable(()=> import('@/pages/SignUp'));
+const Home = loadable(()=> import('@/pages/Home'));
+const Search = loadable(()=> import('@/pages/Search'));
+const Profile = loadable(()=> import('@/pages/Profile'));
 
 
 const App = () => {
-    console.log('dir',__dirname);
+        
     return (
         
         <Routes>            
@@ -20,7 +18,7 @@ const App = () => {
             <Route path="/signup" element={<SignUp />}/>
             <Route path="/home" element={<Home />}/>
             <Route path="/search" element={<Search />}/>
-            <Route path="/Profile" element={<Profile />}/>
+            <Route path="/profile" element={<Profile />}/>
             <Route path="/download" element={<Download />}/>
         </Routes>
     )
