@@ -1,43 +1,38 @@
-import { useContext } from "react"
-import { CheckboxContext } from "./CheckboxContext";
+import { ChangeEventHandler, createContext, useCallback, useState } from "react";
 
-
-type Props = {
+type Props   = {
     children : string,
-    disabled : boolean,
-    checked : boolean,
-    onChange : any
+    name : string,
+    id : string    
 }
-const Checkbox = ({children,disabled,checked,onChange , value} : Props ) => {
-    const context = useContext(CheckboxContext);
 
-    if(!context){
-        return (
-            <label>
-                <input 
-                    type="checkbox" 
-                    disabled={disabled}
-                    checked={checked}
-                    onChange = {({target : {checked}})=>{onChange(checked)}}
 
-                />
+
+
+const Checkbox = ({children , name , id} : Props)  => {
+    
+    const [step1checkarr, setstep1checkarr] = useState<string[]>([]);
+    const onChangeIscheckbox : ChangeEventHandler<HTMLInputElement> = useCallback((e ) => {
+        
+        if(e.target.checked == true){
+            setstep1checkarr(prev  =>[...prev , e.target.id]);
+        }else{
+            console.log(e.target.id);
+            setstep1checkarr((prev)=>prev.filter( (p) => p !== e.target.id))            
+            // setisCheckedAll(false)
+        }
+        
+    },[step1checkarr]);
+
+    return (
+        <div>
+            <input type="checkbox" name={name} id={id} onChange={onChangeIscheckbox}/>
+            <label htmlFor={id}>
                 {children}
             </label>
-        )
-    }
-    const {isDisabled,isChecked,toggleValue} = context;
-
-    return(
-        <label>
-            <input 
-                type="checkbox" 
-                disabled={isDisabled(disabled)} 
-                checked={isChecked(value)} 
-                onChange={({target : {checked}})=>{toggleValue({checked,value})}} 
-            />
-            {children}
-        </label>
+        </div>
     )
 }
+
 
 export default Checkbox;
