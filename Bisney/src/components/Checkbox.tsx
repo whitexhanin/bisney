@@ -1,32 +1,25 @@
 import { ChangeEventHandler, createContext, useCallback, useState } from "react";
 
 type Props   = {
-    children : string,
+    children : React.ReactNode,
     name : string,
-    id : string    
+    id : string  ,
+    // props : any ,
+    sendDataToParent: ChangeEventHandler<HTMLInputElement>
 }
 
 
 
 
-const Checkbox = ({children , name , id} : Props)  => {
-    
-    const [step1checkarr, setstep1checkarr] = useState<string[]>([]);
-    const onChangeIscheckbox : ChangeEventHandler<HTMLInputElement> = useCallback((e ) => {
-        
-        if(e.target.checked == true){
-            setstep1checkarr(prev  =>[...prev , e.target.id]);
-        }else{
-            console.log(e.target.id);
-            setstep1checkarr((prev)=>prev.filter( (p) => p !== e.target.id))            
-            // setisCheckedAll(false)
-        }
-        
-    },[step1checkarr]);
+const Checkbox : React.FC<Props> = ({children , name , id , sendDataToParent} : Props)  => {   
+
+    const sendData = (e : any) => {        
+       sendDataToParent(e)
+    }
 
     return (
         <div>
-            <input type="checkbox" name={name} id={id} onChange={onChangeIscheckbox}/>
+            <input type="checkbox" name={name} id={id} onChange={sendData}/>
             <label htmlFor={id}>
                 {children}
             </label>
