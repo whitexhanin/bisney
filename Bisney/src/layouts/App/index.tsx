@@ -1,5 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import loadable from "@loadable/component";
+import CreateEmail from "@/pages/CreateEmail";
+import CreatePassword from "@/pages/CreatePassword";
 
 const Download = loadable(()=> import('@/pages/Download'));
 const Login = loadable(()=> import('@/pages/LogIn'));
@@ -15,7 +17,10 @@ const App = () => {
         
         <Routes>            
             <Route path="/" element={<Login/>}/>
-            <Route path="/signup" element={<SignUp />}/>
+            <Route path="/signup">
+                <Route path="create-email" element={<CreateEmail/>}/>
+                <Route path="create-password" element={<CreatePassword/>}/>
+            </Route>
             <Route path="/home" element={<Home />}/>
             <Route path="/search" element={<Search />}/>
             <Route path="/profile" element={<Profile />}/>
