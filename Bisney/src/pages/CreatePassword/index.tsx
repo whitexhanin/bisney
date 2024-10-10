@@ -1,15 +1,25 @@
 import { Link } from 'react-router-dom';
-import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeLabelStyle , hasLabelStyle , nextButton , checkboxlist , txt , showpassword , message , bar , value} from './styles.css';
-import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useEffect, useState } from 'react';
+import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeLabelStyle , hasLabelStyle , nextButton , checkboxlist , txt , showpassword , message , bar , value , emailtit , emailadd} from './styles.css';
+import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useContext, useEffect, useState } from 'react';
 import SignupLayout from '@/layouts/Signup';
+// import CreateEmail from '@/pages/EmailContext';
+// import {useEmailContext} from '@/components/EmailProvider';
+
+// const useEmailContext = () => useContext(EmailContext);
 
 const CreatePassword = () => {
+    // const { email } = useEmail;
     const [passwordData , setPasswordData] = useState({
         password: '',
         showPassword : false,
         isValid : false,
         isHasPassword : false,
+        ismsgValidScore : 0,
     })
+    // const [count , setCount] = useState([]);
+    // console.log(count);
+
+    console.log(passwordData.isValid);
 
     const onClickShowPassword: MouseEventHandler<HTMLButtonElement>  = useCallback((e) => {
         setPasswordData((prev)=>{
@@ -21,26 +31,78 @@ const CreatePassword = () => {
     },[])
     
     const validatePassword = (password: string) => {
-        const regexPassword = /^(?=.*[0-9!@#$%^&*])(?=.*[a-zA-Z]).{6,}$/;
+        const regexPassword = /^(?=.*[0-9!@#$%^&*])(?=.*[a-zA-Z]).{6,}$/;       
         return regexPassword.test(password);
     };
 
+    //숫자 
+    
+    // const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+    // const hasUpperCase = /[A-Z]/;
+    // const hasLowerCase = /[a-z]/;
+    // const hasLength = 6;
+
+    // const validateNumber = (password) => {
+    //     const hasNumber = /\d/;
+    //     return hasNumber.test(password);
+    // }
+    
+    
+    const checkPassword = (password : string)=>{
+        let score = 0
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
+        const hasUpperCase = /[A-Z]/;
+        const hasLowerCase = /[a-z]/;
+        const hasNumber = /\d/;
+        const hasLength = 6;
+        
+
+        if(hasSpecialChar.test(password)){
+            score += 1;
+        }
+        if(hasUpperCase.test(password)){
+            score += 1;
+        }
+        if(hasLowerCase.test(password)){
+            score += 1;
+        }
+        if(hasNumber.test(password)){
+            score += 1;
+        }
+        if(hasLength <= password.length){
+            score += 1;
+        }                
+        
+        return score
+    }
+
+    //score에 따른 
+
     const onChangePassword = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const newPassword = e.target.value;
-        setPasswordData((prev)=>{
+        setPasswordData((prev )=>{
             return {
                 ...prev,
                 password : newPassword,
-                isValid :validatePassword(newPassword)   ,
+                isValid :validatePassword(newPassword),
                 isHasPassword : newPassword.length > 0? true : false, 
+                ismsgValidScore : checkPassword(newPassword),
             }
         })    
       },[]);
+
+      const { email, setEmail } = useEmailContext();
+
+      console.log(email);
 
     return (
         <SignupLayout>
             <div className={boxcontainer}>
                 <p className={title}>비밀번호를 생성하세요</p>
+                <div className="myemail">
+                    <span className={emailtit}>로그인에 사용할 이메일</span>
+                    <span className={emailadd}>{email}</span>
+                </div>
                 <div>
                     <div className={inputContainer}>
                         <input type={passwordData.showPassword?'text' : "password"} name="" id="" value={passwordData.password} onChange={onChangePassword} className={inputStyle}/>
@@ -54,19 +116,15 @@ const CreatePassword = () => {
                                 <path className="" fill = "#86898f" fillRule="evenodd" clipRule="evenodd" d="M12.0011 14C8.63237 14 5.4638 12.0754 2.44714 7.9998C5.46419 3.92435 8.63259 2 12.0011 2C15.3699 2 18.5384 3.9246 21.5551 8.00019C18.5381 12.0757 15.3697 14 12.0011 14ZM12.0011 0C7.5541 0 3.72153 2.69306 0.396231 7.42477L-0.0078125 7.9997L0.396182 8.57467C3.72105 13.3066 7.55383 16 12.0011 16C16.4481 16 20.2807 13.3069 23.606 8.57523L24.0101 8.0003L23.6061 7.42533C20.2812 2.69339 16.4484 0 12.0011 0ZM9 8C9 6.34315 10.3431 5 12 5C13.6569 5 15 6.34315 15 8C15 9.65685 13.6569 11 12 11C10.3431 11 9 9.65685 9 8ZM12 3C9.23858 3 7 5.23858 7 8C7 10.7614 9.23858 13 12 13C14.7614 13 17 10.7614 17 8C17 5.23858 14.7614 3 12 3Z"></path>
                             </svg>                    
                             }</button>                    
-                    </div>            
-                    <div className={`${message} ${passwordData.isValid ? "red" : ""}`}>
+                    </div>                                
+                    <div className={bar}>
+                        <div className={value} style={{width:`${passwordData.ismsgValidScore * 20}%`}}></div>
+                    </div>
+                    <div className={`${message}`}>
                         최소 숫자 1개 또는 특수 문자 1개를 반드시 포함해야 하며 총 6자(대소문자 구분) 이상이어야 합니다.
                     </div>
-                    <div className={bar}>
-                        <div className={value}></div>
-                    </div>
-                </div>
-                <div className="myemail">
-                    <span className="emailtit">로그인에 사용할 이메일</span>
-                    {/* <span className="emailadd">{passwordData.email}</span> */}
-                </div>
-                <button className={nextButton}  type = "button" disabled={!passwordData.isValid}>회원 가입</button>
+                </div>                
+                <button className={nextButton}  type = "button" disabled={!passwordData.isValid}>동의하고 진행하기</button>
             </div>
           </SignupLayout>
     )

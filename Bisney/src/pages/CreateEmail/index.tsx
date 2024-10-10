@@ -1,15 +1,39 @@
 import { Link } from 'react-router-dom';
 import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeLabelStyle , hasLabelStyle , nextButton , checkboxlist , txt} from './styles.css';
-import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useEffect, useState } from 'react';
+import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useContext, useEffect, useState ,Dispatch , SetStateAction ,createContext} from 'react';
 import Checkbox from '@/components/Checkbox';
-import SignupLayout from '@/layouts/Signup';
+import SignupLayout, { CounterContext , useCounterState } from '@/layouts/Signup';
+// import { useEmailContext } from '@/components/EmailProvider';
+
+// Context 생성
+// interface EmailContextType {
+//     email: string;
+//     setEmail: Dispatch<SetStateAction<string>>;
+// }
+
+// Context 생성 (기본값 제공)
+// const EmailContext = createContext<EmailContextType>({
+//     email: email,
+//     setEmail: () => {} // 타입 일치화를 위해 빈 함수 제공
+// });
+
+// const CounterContext = createContext();
 
 const CHECKBOX_ALL_LENGTH = 3;
 
 const CreateEmail = () => {
+    const [counter] = useCounterState();
 
-    const [emailData , setEmailData] = useState({
-        email:'',
+
+    // console.dir(counterState);
+    // const [email, setEmail] = useState('');
+    
+    // const EmailContext = createContext<EmailContextType>({
+    //     email: email,
+    //     setEmail: () => {} // 타입 일치화를 위해 빈 함수 제공
+    // });
+
+    const [emailData , setEmailData] = useState({        
         isValidEmail : false,
         step1checkarr: [] as string[],
         step1checkall: false,        
@@ -17,15 +41,17 @@ const CreateEmail = () => {
         isHasEmail : false,   
     });
 
+    // const { email, setEmail } = useEmailContext();    
+
     const onChangeEmail: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
         const newEmail = e.target.value;
-        console.log(newEmail.length);
-
+        // setEmail(newEmail);        
         setEmailData((prev) => ({
-           ...prev, email: newEmail ,
+           ...prev, 
            isValidEmail : validateEmail(newEmail),
-           isHasEmail : newEmail.length > 0? true : false,
+           isHasEmail : newEmail !== '',
           }));
+        //   console.log(email);
       }, []);
 
     const validateEmail = (email: string) => {
@@ -71,25 +97,26 @@ const CreateEmail = () => {
         });
       }, []);
 
-    //   useEffect(()=>{
+    //   const handleChange = (e) => {
+    //     setEmail(e.target.value);
+    //   }
+    
 
-        
-    //   },
-    //   [emailData.isCheckedAll])
-      
-
-    return (
+    return (        
         <SignupLayout>
             <div className={boxcontainer}>           
                 <p className={title}>이메일을 입력하세요</p>
-                <div className={inputContainer}>                    
-                    <input
-                        type="email"
-                        id="email"
-                        className={inputStyle}
-                        value={emailData.email}                        
-                        onChange={onChangeEmail}
-                    />
+                
+                <div className={inputContainer}>   
+                        <input
+                            type="email"
+                            id="email"
+                            className={inputStyle}
+                            // value={email || ''}                        
+                            onChange={onChangeEmail}
+                        />
+                        {/* {children} */}
+                
                     <label htmlFor="email" className={`${labelStyle} ${activeLabelStyle} ${emailData.isHasEmail ? hasLabelStyle : ''}`}>이메일</label>
                 </div>         
                 <div className={checkboxlist}>               
@@ -113,9 +140,14 @@ const CreateEmail = () => {
                     <Link to="/signup/create-password"  className={`${nextButton} ${!(emailData.isCheckedAll && emailData.isValidEmail) ? "disabled" : ""}`}>다음</Link>                
                 </div>
                 </div>
-        </SignupLayout>
-            
+        </SignupLayout>        
     )
 }
 
-export default CreateEmail;
+// const useEmailContext = () => useContext(EmailContext);
+// const useEmailContext = () => useContext(EmailContext);
+export default  CreateEmail ;
+
+// const useEmailContext = () => useContext(EmailContext);
+// console.log(useEmailContext)
+// export { EmailProvider, useEmailContext };

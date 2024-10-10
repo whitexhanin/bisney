@@ -113,22 +113,38 @@ export const message = style({
 
 export const bar = style({
     position:'relative',
-    width:'100px',
-    height:'20px',
-    borderRadius:'20px',
-    backgroundColor:'#eaeaea',
+    margin:'20px 0',
+    width:'187px',
+    height:'6px',
+    borderRadius:'3px',
+    backgroundColor:'#ccced3',
     overflow:'hidden',    
 })
+
 export const value = style({
     selectors : {
         [` ${bar} &`] : {
             position:'absolute',
             top:0,
             left:0,
-            background:'blue',
-            width:'50%',
+            background:'#d40909',            
             height:'100%',
         }
     }
 })
+
+export const emailtit = style({
+    fontSize:'16px',
+    color:'#252526',    
+
+})
+
+export const emailadd = style({
+    fontSize:'14px',
+    color:'#252526',
+    fontWeight:'bold',
+
+})
+
+
 
