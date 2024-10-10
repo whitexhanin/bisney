@@ -22,7 +22,9 @@ import SignupLayout, { CounterContext , useCounterState } from '@/layouts/Signup
 const CHECKBOX_ALL_LENGTH = 3;
 
 const CreateEmail = () => {
-    const [counter] = useCounterState();
+    const email = useCounterState();
+    console.log(email);
+    const [emailtext , setEmailtext] = useState();
 
 
     // console.dir(counterState);
@@ -45,13 +47,14 @@ const CreateEmail = () => {
 
     const onChangeEmail: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
         const newEmail = e.target.value;
+        // const new
         // setEmail(newEmail);        
         setEmailData((prev) => ({
            ...prev, 
            isValidEmail : validateEmail(newEmail),
            isHasEmail : newEmail !== '',
           }));
-        //   console.log(email);
+        
       }, []);
 
     const validateEmail = (email: string) => {
@@ -112,7 +115,7 @@ const CreateEmail = () => {
                             type="email"
                             id="email"
                             className={inputStyle}
-                            // value={email || ''}                        
+                            value={emailtext}                        
                             onChange={onChangeEmail}
                         />
                         {/* {children} */}

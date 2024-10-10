@@ -14,15 +14,13 @@ interface EmailContextType {
 // Context 생성 (기본값 제공)
 
 
-export const CounterContext = createContext({});
+export const CounterContext = createContext('defaultemail');
 
 function CounterProvider({ children } : {children : any}) {
-    // const counterState = useState('defaultemail');
-    const counterState = createContext<EmailContextType>({
-        email: 'defaultemail',
-        setEmail: () => {} // 타입 일치화를 위해 빈 함수 제공
-    });
-  return <CounterContext.Provider value={counterState}>{children}</CounterContext.Provider>;
+    const [email , setEmail] = useState('');
+    // // const counterState = useState('defaultemail');
+    // const counterState = createContext<EmailContextType>('defaultemail');
+  return <CounterContext.Provider value={email}>{children}</CounterContext.Provider>;
 }
 
 export function useCounterState() {
