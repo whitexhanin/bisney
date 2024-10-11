@@ -72,7 +72,11 @@ export const nextButton = style({
     color:'#fff',
     fontSize:'16px',
     textAlign:'center',
-
+    selectors : {
+        [`&.disabled`] : {
+            background:'#ccced3',
+        }
+    }
 })
 
 export const  checkboxlist = style ({

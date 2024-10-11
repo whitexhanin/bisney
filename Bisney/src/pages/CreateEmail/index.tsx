@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom';
 import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeLabelStyle , hasLabelStyle , nextButton , checkboxlist , txt} from './styles.css';
 import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useContext, useEffect, useState ,Dispatch , SetStateAction ,createContext} from 'react';
 import Checkbox from '@/components/Checkbox';
-import SignupLayout, { CounterContext , useCounterState } from '@/layouts/Signup';
+import SignupLayout from '@/layouts/Signup';
+import { useCounterState } from '@/components/EmailProvider';
+
 // import { useEmailContext } from '@/components/EmailProvider';
 
 // Context 생성
@@ -22,18 +24,12 @@ import SignupLayout, { CounterContext , useCounterState } from '@/layouts/Signup
 const CHECKBOX_ALL_LENGTH = 3;
 
 const CreateEmail = () => {
-    const email = useCounterState();
+    
+    const {email , setEmail} = useCounterState();
     console.log(email);
     const [emailtext , setEmailtext] = useState();
 
 
-    // console.dir(counterState);
-    // const [email, setEmail] = useState('');
-    
-    // const EmailContext = createContext<EmailContextType>({
-    //     email: email,
-    //     setEmail: () => {} // 타입 일치화를 위해 빈 함수 제공
-    // });
 
     const [emailData , setEmailData] = useState({        
         isValidEmail : false,
@@ -43,19 +39,21 @@ const CreateEmail = () => {
         isHasEmail : false,   
     });
 
-    // const { email, setEmail } = useEmailContext();    
+    
 
     const onChangeEmail: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
         const newEmail = e.target.value;
         // const new
-        // setEmail(newEmail);        
+        console.log("New Email:", newEmail);               
         setEmailData((prev) => ({
            ...prev, 
            isValidEmail : validateEmail(newEmail),
            isHasEmail : newEmail !== '',
           }));
-        
-      }, []);
+        // console.log(email);
+        setEmail(newEmail); 
+        console.log(email);
+      }, [setEmail]);
 
     const validateEmail = (email: string) => {
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -100,9 +98,10 @@ const CreateEmail = () => {
         });
       }, []);
 
-    //   const handleChange = (e) => {
-    //     setEmail(e.target.value);
-    //   }
+
+
+    
+    
     
 
     return (        
@@ -115,7 +114,7 @@ const CreateEmail = () => {
                             type="email"
                             id="email"
                             className={inputStyle}
-                            value={emailtext}                        
+                            // value={newemail}                        
                             onChange={onChangeEmail}
                         />
                         {/* {children} */}
@@ -147,10 +146,4 @@ const CreateEmail = () => {
     )
 }
 
-// const useEmailContext = () => useContext(EmailContext);
-// const useEmailContext = () => useContext(EmailContext);
-export default  CreateEmail ;
-
-// const useEmailContext = () => useContext(EmailContext);
-// console.log(useEmailContext)
-// export { EmailProvider, useEmailContext };
+export default  CreateEmail 

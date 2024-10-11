@@ -1,40 +1,33 @@
-// import React, { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
+//Error 이메일 공유 해결하기
 
-import { createContext, useState } from "react";
+import React, { Dispatch, ReactNode , SetStateAction, createContext, useContext, useMemo, useState} from 'react';
 
-// // Context 생성
-// interface EmailContextType {
-//     email: string;
-//     setEmail: Dispatch<SetStateAction<string>>;
-// }
+interface EmailContextType {
+    email: string;
+    setEmail: Dispatch<SetStateAction<string>>;
+}
 
-// // Context 생성 (기본값 제공)
-// const EmailContext = createContext<EmailContextType>({
-//     email: 'hh',
-//     setEmail: () => {} // 타입 일치화를 위해 빈 함수 제공
-// });
 
-// // Provider 컴포넌트
-// const EmailProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-//     const [email, setEmail] = useState('');
-// console.log(email);
-//     return (
-//         <EmailContext.Provider value={{ email, setEmail }}>
-//             {children}
-//         </EmailContext.Provider>
-//     );
-// };
 
-// // Context를 사용하여 데이터를 가져오는 Custom Hook
-// const useEmailContext = () => useContext(EmailContext);
-// console.log(useEmailContext)
-// export { EmailProvider, useEmailContext };
+export const CounterContext = createContext<EmailContextType>({
+    email:'defaultemail',
+    setEmail:()=> {}
+});
 
-// const CounterContext = createContext();
+export function CounterProvider({ children } : {children : React.ReactNode}) {
+    const [email , setEmail] = useState('');       
+    // const value = () => ({ email, setEmail});
+    // console.log(email);
+    const value = useMemo(()=>{return [email , setEmail]},[email]);
+    // console.log(value);
+  return (<CounterContext.Provider value={{email , setEmail}}>{children}</CounterContext.Provider>);
+}
 
-// function CounterProvider({ children }) {
-
-//     const counterState = useState('defaultemail');
-
-//   return <CounterContext.Provider value={counterState}>{children}</CounterContext.Provider>;
-// }
+export function useCounterState() {
+    const value = useContext(CounterContext);
+    // console.log(value);
+    if (value === undefined) {
+      throw new Error('useCounterState should be used within CounterProvider');
+    }
+    return value;
+}

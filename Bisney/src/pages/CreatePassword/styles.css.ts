@@ -65,13 +65,17 @@ export const hasLabelStyle = style({
 export const nextButton = style({
     display:'block',
     width:'100%',
-    height:'52px',
-    lineHeight:'52px',
+    height:'52px',    
     background:'#000',
     borderRadius:'26px',
     color:'#fff',
     fontSize:'16px',
     textAlign:'center',
+    selectors : {
+        [`&.disabled`] : {
+            background:'#ccced3',
+        }
+    }
 
 })
 
