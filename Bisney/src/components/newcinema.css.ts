@@ -11,6 +11,8 @@ globalStyle('.swiper', {
   });
   
   globalStyle('.swiper-slide', {
+    width:'300px',
+    height:'500px',
     textAlign: 'center',
     fontSize: '18px',
     background: '#fff',

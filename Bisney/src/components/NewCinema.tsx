@@ -1,37 +1,77 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import {newcinema} from "./newcinema.css";
+import { useEffect, useState } from "react";
 
-export const NewCinema = async () => {
+// // import 'swiper/swiper-bundle.min.css';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { redirect, useNavigate } from "react-router-dom";
 
+// Swiper 모듈 사용 설정
+// SwiperCore.use([Pagination, Navigation, Autoplay]);
+
+interface Movie {
+    movieCd: string,
+    movieNm: string,
+}
+
+export const NewCinema = () => {
+    const navigation = useNavigate();
     const API_KEY = '2b8dbf43dbbe9ae066cca88158fa0193';
     const baseURL = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json';
 
-    const fetchData = async (date) => {
-        const response = await fetch(`${baseURL}?key=${API_KEY}&targetDt=${date}`);
-        const data = await response.json();
-        console.log(data);
-    };
+   
 
-    // 사용 예제
-    const data : any  = fetchData('20241009');    
+    const [data, setData] = useState<Movie[]>([]);
+
+    const fetchData = async (date : string) => {
+      try {
+        const response = await fetch(`${baseURL}?key=${API_KEY}&targetDt=${date}`, {
+          method: 'GET',
+        });
+        if (response.ok) {
+          const result = await response.json();
+          setData(result.boxOfficeResult.dailyBoxOfficeList);
+        } else {
+          console.error('Error fetching data:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    useEffect(() => {
+      fetchData('20241009');
+    }, []);
+    console.log(data);
+  
+    if (!data) {
+      return <div>로딩 중...</div>;
+    }
+
+    const onsubScriptPage = (e) => {
+        const item = e.target;
+        console.log(e);
+        console.log('ii',item.movieCd);
+        redirect(`/product/${item.movieCd}`)
+    }
 
     return (
         <>
-            <Swiper className={newcinema}>
+            <Swiper className={newcinema}
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            spaceBetween={50}
+            slidesPerView={2}
+            navigation
+            pagination={{ clickable: true }}
+            scrollbar={{ draggable: true }}
+            onSwiper={(swiper) => console.log(swiper)}
+            onSlideChange={() => console.log('slide change')}
+            >
                 
-            {data?.map((d : any )=>{
-                <SwiperSlide key ={d.movieNm}>{d.movieNm}</SwiperSlide>
-            })}
-                {/* <SwiperSlide>Slide 1</SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
-                <SwiperSlide>Slide 4</SwiperSlide>
-                <SwiperSlide>Slide 5</SwiperSlide>
-                <SwiperSlide>Slide 6</SwiperSlide>
-                <SwiperSlide>Slide 7</SwiperSlide>
-                <SwiperSlide>Slide 8</SwiperSlide>
-                <SwiperSlide>Slide 9</SwiperSlide> */}
+                {data?.map((d : any )=>(
+                    <SwiperSlide key ={d.movieNm} onClick={onsubScriptPage}>{d.movieNm}</SwiperSlide>
+                ))}                
             </Swiper>
       </>
     )
