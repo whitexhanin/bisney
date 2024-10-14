@@ -8,6 +8,7 @@ const Home = loadable(()=> import('@/pages/Home'));
 const Search = loadable(()=> import('@/pages/Search'));
 const Profile = loadable(()=> import('@/pages/Profile'));
 const Product = loadable(()=> import('@/pages/Product'));
+const ProductDetail = loadable(()=> import('@/pages/ProductDetail'));
 const CreatePassword = loadable(()=> import('@/pages/CreatePassword'));
 const CreateEmail = loadable(()=> import('@/pages/CreateEmail'));
 
@@ -27,7 +28,8 @@ const App = () => {
             <Route path="/search" element={<Search />}/>
             <Route path="/profile" element={<Profile />}/>
             <Route path="/download" element={<Download />}/>
-            <Route path="/product/:id" element={<Product />}>                
+            <Route path="/product" element={<Product />}>            
+                <Route path=":id" element={<ProductDetail />}></Route>    
             </Route>
         </Routes>
     )
