@@ -1,34 +1,31 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-interface Movie {
-    
-}
-
 const ProductDetail = ()=> {
     const { id } = useParams();
     const API_KEY = '2b8dbf43dbbe9ae066cca88158fa0193';
-    const baseURL = 'http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json';
+    const baseURL = 'https://api.themoviedb.org/3/movie/';
    console.log(typeof(id));
 
     const [data, setData] = useState(null);
 
     const fetchData = async (id : string) => {
       try {
-        const response = await fetch(`${baseURL}?key=${API_KEY}&movieCd=${id}`, {
+        const response = await fetch(`${baseURL}${id}?language=en-US`, {
           method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYzBmNjNmZTI4OTFkMWE4ZjIyMjgzYTdkNjJiNzMxMiIsIm5iZiI6MTcyODg4MDc0MS4wMzY1NDQsInN1YiI6IjY3MGM4NjBiNGRmNTlhNjA4YzYzNzY2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JI7ppKPLAtd1pBoMM-1grlHUg5S5u9iLg5PiHU2XSME'
+          }
         });
-
-        if (response.ok) {
-          const result = await response.json();
-          console.log(result)
-          setData(result);
-          
-        } else {
-          console.error('Error fetching data:', response.statusText);
+        if(!response.ok){
+          throw new Error(`HTTP error! status: ${Error}`)
         }
+
+        const result = await response.json();               
+        setData(result);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        throw new Error(`Failed to fetch data: ${error}`);      
       }
     };
   
@@ -42,7 +39,7 @@ const ProductDetail = ()=> {
       return <div>로딩 중...</div>;
     }
     
-    const { movieInfo } = data.movieInfoResult;
+    // const { movieInfo } = result;
 
     return (
         <>
@@ -51,9 +48,10 @@ const ProductDetail = ()=> {
                 <h2>Product Detail for ID: {id}</h2>
             </div>
             <div>
-                <p>Title: {movieInfo.movieNm}</p>
-                <p>Director: {movieInfo.directors.map(director => director.peopleNm).join(', ')}</p>
-                <p>Release Date: {movieInfo.openDt}</p>
+                <div style={{width:'300px',height:'400px',background:`url(https://image.tmdb.org/t/p/w500/${data.poster_path}) center no-repeat`,backgroundSize:'100%',}}></div>
+                <p>Title: {data.title}</p>
+                 <p>Director: {data.genres.map(gen => gen.name).join(', ')}</p> 
+                <p>overview: {data.overview}</p>
                 {/* 추가적인 정보들 */}
             </div>
         </>
