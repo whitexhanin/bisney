@@ -139,7 +139,10 @@ const CreateEmail = () => {
                     <div className={txt}>
                     디즈니는 위의 사용자 동의에 따라 정보를 이용 할 수 있습니다.
                     </div>
-                    <Link to="/signup/create-password"  className={`${nextButton} ${!(emailData.isCheckedAll && emailData.isValidEmail) ? "disabled" : ""}`}>다음</Link>                
+                    <Link to={`${!(emailData.isCheckedAll && emailData.isValidEmail) ? "" : "/signup/create-password"}`} className={`${nextButton} ${!(emailData.isCheckedAll && emailData.isValidEmail) ? "disabled" : ""}`}>
+                    다음
+                    </Link>
+
                 </div>
                 </div>
         </SignupLayout>        
