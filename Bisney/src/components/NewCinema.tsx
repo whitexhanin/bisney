@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 // // import 'swiper/swiper-bundle.min.css';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
-import { Navigate, redirect, useNavigate, useParams } from "react-router-dom";
+import { Link, Navigate, redirect, useNavigate, useParams } from "react-router-dom";
 
 // Swiper 모듈 사용 설정
 // SwiperCore.use([Pagination, Navigation, Autoplay]);
@@ -76,10 +76,7 @@ export const NewCinema =  () => {
                 const upcoming = await fetchMovies('upcoming');
                 const allMovies = [...popular, ...topRated, ...upcoming];
                 const uniqueMovies = removeDuplicates(allMovies);
-
-                // setPopularMovies(popular);
-                // setTopRatedMovies(topRated);
-                // setUpcomingMovies(upcoming);                
+             
                 setTotalData(uniqueMovies);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -103,7 +100,7 @@ export const NewCinema =  () => {
 
 
     return (
-        <>
+        <>                        
             <Swiper className={newcinema}
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             spaceBetween={50}
