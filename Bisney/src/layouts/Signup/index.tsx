@@ -13,7 +13,7 @@ const SignupLayout: React.FC<Props>= ({children}) => {
         
             <div className={container}>
                 <h2 className={logo}>
-                    {/* <img className={img} src={`/logo/original.png`} alt="Disney+" /> */}
+                    <img className={img} src={`/logo/original.png`} alt="Disney+" />
                 </h2>
                 {/* <CounterProvider>  */}
                 <div>      
