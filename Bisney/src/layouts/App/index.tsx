@@ -11,15 +11,16 @@ const Product = loadable(()=> import('@/pages/Product'));
 const ProductDetail = loadable(()=> import('@/pages/ProductDetail'));
 const CreatePassword = loadable(()=> import('@/pages/CreatePassword'));
 const CreateEmail = loadable(()=> import('@/pages/CreateEmail'));
+const Main = loadable(()=> import('@/pages/Main'));
 
 
 
 const App = () => {
         
-    return (
-        
-        <Routes>            
-            <Route path="/" element={<Login/>}/>
+    return (        
+        <Routes>                        
+            <Route path="/" element={<Main/>}/>            
+            <Route path="/login" element={<Login/>}/>            
             <Route path="/signup">
                 <Route path="create-email" element={<CreateEmail/>}/>
                 <Route path="create-password" element={<CreatePassword/>}/>
