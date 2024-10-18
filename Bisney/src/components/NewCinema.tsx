@@ -53,7 +53,7 @@ export const NewCinema =  () => {
       const navigate = useNavigate();
       const onsubScriptPage = (itemname: string) => {
         console.log(itemname);
-        navigate(`/product/${itemname}`);
+        navigate(`/products/${itemname}`);
     };
 
     const removeDuplicates = (array) => {
