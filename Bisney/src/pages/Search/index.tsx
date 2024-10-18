@@ -1,12 +1,18 @@
-import * as styles from './styles.css'
+import CollectionList from "@/components/CollectionList";
+import SearchInput from "@/components/SearchInput";
+import SearchMenu from "@/components/SearchMenu";
+
 
 const Search  = () => {
+
+    
+
+
     return (
-        <>
-            <div className={styles.searchInput}>
-                <input type="text" placeholder="Search..." className={styles.inputStyle} />
-                <button className={styles.buttonStyle}>Search</button>
-            </div>    
+        <>               
+            <SearchInput />
+            <SearchMenu />
+            <CollectionList />
         </>
     )
 }
