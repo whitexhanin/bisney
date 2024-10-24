@@ -4,6 +4,8 @@ import * as styles from './styles.css';
 
 const ProductList = () => {
 
+    
+
     const params = useParams();
     console.log(params);
 
@@ -13,9 +15,17 @@ const ProductList = () => {
     const [data , setData] = useState([]);
 
     const fetchMovies = async (endpoint) => {
-        
+        //2024 disney
+        // 'https://api.themoviedb.org/3/search/movie?query=disney&include_adult=false&language=en-US&page=1&year=2024'
+        //moana 유사
+        //'https://api.themoviedb.org/3/movie/1108427/similar?language=en-US&page=1'
+
+
         try {
-            const response = await fetch(`${baseURL}/discover/${endpoint}?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc`, {
+            const response = await fetch('https://api.themoviedb.org/3/person/popular?language=en-US&page=1'
+                // `${baseURL}/discover/${endpoint}?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc`
+                ,
+                 {
                 method: 'GET',
                 headers: {
                     accept: 'application/json',
@@ -97,7 +107,7 @@ const ProductList = () => {
                 <div className={styles.itemlist}>
                     {
                         data.map((d)=>(
-                            <div className={styles.item} style={{background:`url(https://image.tmdb.org/t/p/w500/${d.poster_path}) center no-repeat`,backgroundSize:'cover',}}></div>                    
+                            <div key={d.id} className={styles.item} style={{background:`url(https://image.tmdb.org/t/p/w500/${d.poster_path}) center no-repeat`,backgroundSize:'cover',}}></div>                    
                         ))
                     }
                 </div>
