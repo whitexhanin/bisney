@@ -5,6 +5,7 @@
   "compilerOptions": {    
     "composite": true,
     "baseUrl": "./",
+    "noUncheckedIndexedAccess": true,
     "paths" : {      
       "@/*" : ["./src/*"],
       "public/*" : ["./public/*"],      
