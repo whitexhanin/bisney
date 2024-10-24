@@ -2,44 +2,33 @@ import {style , globalStyle ,  styleVariants} from '@vanilla-extract/css';
 
 export const newcinema = style({
     width: '100%',
-    height: '100%',
+    height: 'auto',
 })
-
-// export const box = style({
-//   selectors: {
-//     '.newcinema &': {
-//       width:'100%',
-//       height:'100%',
-//       backgroundSize : '100%',      
-//     }
-//   }
-// })
-
-// export const background = styleVariants({
-//   primary: { background: 'blue' },
-//   secondary: { background: 'aqua' }
-// });
 
 globalStyle('.swiper', {
     width: '100%',
-    height: '100%',
+    height: '100%',    
+  });
+  globalStyle('.swiper-wrapper', {    
+    // height:'100%',
+    aspectRatio:'2 / 3',    
   });
   
   globalStyle('.swiper-slide', {
-    width:'300px',
-    height:'500px',
-    textAlign: 'center',
+    // textAlign: 'center',
     fontSize: '18px',
     background: '#fff',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // display: 'flex',
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // aspectRatio:'2 / 3',    
+    
   });
   
   globalStyle('.swiper-slide img', {
     display: 'block',
     width: '100%',
     height: '100%',
-    objectFit: 'cover',
+    // objectFit: 'cover',
   });
   

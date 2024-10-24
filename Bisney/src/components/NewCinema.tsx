@@ -21,7 +21,6 @@ export const NewCinema =   () => {
   const navigate = useNavigate();
 
   const onsubScriptPage = (itemname: string) => {
-    console.log(itemname);
     navigate(`/products/${itemname}`);
   };
 
@@ -52,7 +51,7 @@ export const NewCinema =   () => {
       setLoading(false);
     }
   }, [popularData, topRatedData, upcomingData]);
-  
+  console.log(totalData);
     if (loading) {
       return <div>로딩 중...</div>;      
     }  
@@ -85,7 +84,7 @@ export const NewCinema =   () => {
               
                 {totalData?.map((movie )=>(
                     <SwiperSlide key={movie.id} onClick={()=>onsubScriptPage(movie.id)}>
-                      <div style={{width:'100%',height:'100%',background:`url(https://image.tmdb.org/t/p/original/${movie.poster_path}) center no-repeat`,backgroundSize:'100%',}}></div>
+                      <img src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt={movie.original_title} style={{objectFit:"fill"}}/>                      
                     </SwiperSlide>
                 ))}                
             </Swiper>
