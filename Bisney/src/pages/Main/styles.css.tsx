@@ -6,6 +6,8 @@ export const h2 = style({
     fontSize:'30px',
     fontWeight:'bold',
     color:'#fff',
+    padding: '20px',
+    textAlign: 'center',
 })
 
 export const Link = style({
