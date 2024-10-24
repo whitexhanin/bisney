@@ -4,17 +4,25 @@ export const boxcontainer = style({
     display:'flex',
     flexDirection:'column',
     gap:'25px',
-    width:'580px',
-    height:'620px',
+    width:'100%',
+    maxWidth:'580px',
+    maxHeight:'620px',
     background:'#fff',   
     padding : '56px 72px' ,
     boxSizing : 'border-box',
-    borderRadius:'24px',
+    borderRadius:'24px',   
+    '@media':{
+        'screen and (max-width:800px)': {
+            padding:'20px',
+            borderRadius:'0px', 
+        }
+    }
 })
 
 export const title = style({
     fontSize:'28px',
-    fontWeight : '600'
+    fontWeight : '600',
+    marginBottom:'0'
 })
 
 export const inputContainer = style({
@@ -45,7 +53,7 @@ export const labelStyle = style({
     left:'16px',
     fontSize:'16px',
     color:'#5f6166',
-    transition:'font-size 0.1s ease-in-out'
+    transition:'font-size 0.1s ease-in-out',    
 });
 
 export const activeLabelStyle = style({
@@ -91,4 +99,9 @@ export const txt = style({
     marginBottom:'10px',
     fontSize:'14px',
     color: '#252526',    
+    '@media':{
+        'screen and (max-width:800px)': {
+            whiteSpace:'normal',
+        }
+    }
 })
