@@ -16,7 +16,8 @@ export const itemlist = style({
 })
 
 export const item = style({
-    
     height:'auto',   
-    aspectRatio: 'auto 500 / 735',
+    aspectRatio: '500 / 735',
+    flex: '1 0 150px',
+    minWidth: '150px',
 })
