@@ -1,33 +1,28 @@
-//Error 이메일 공유 해결하기
-
-import React, { Dispatch, ReactNode , SetStateAction, createContext, useContext, useMemo, useState} from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
 interface EmailContextType {
-    email: string;
-    setEmail: Dispatch<SetStateAction<string>>;
+  email: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
 }
 
+const EmailContext = createContext<EmailContextType | undefined>(undefined);
 
+export const EmailProvider = ({ children }) => {
+    const [email, setEmail] = useState('');
 
-export const CounterContext = createContext<EmailContextType>({
-    email:'defaultemail',
-    setEmail:()=> {}
-});
+    return (
+        <EmailContext.Provider value={{ email, setEmail }}>
+            {children}
+        </EmailContext.Provider>
+    );
+};
 
-export function CounterProvider({ children } : {children : React.ReactNode}) {
-    const [email , setEmail] = useState('');       
-    // const value = () => ({ email, setEmail});
-    // console.log(email);
-    const value = useMemo(()=>{return [email , setEmail]},[email]);
-    // console.log(value);
-  return (<CounterContext.Provider value={{email , setEmail}}>{children}</CounterContext.Provider>);
-}
+export const useEmail = () => {
+  
+  const context = useContext(EmailContext);
 
-export function useCounterState() {
-    const value = useContext(CounterContext);
-    // console.log(value);
-    if (value === undefined) {
-      throw new Error('useCounterState should be used within CounterProvider');
+    if (!context) {
+        throw new Error('useEmail must be used within an EmailProvider');
     }
-    return value;
-}
+    return context;
+};
