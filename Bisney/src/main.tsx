@@ -1,14 +1,31 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './layouts/App'
+import App from '@/layouts/App'
 import './index.css'
 import { BrowserRouter} from 'react-router-dom'
+import { EmailProvider } from './components/EmailProvider'
 
-createRoot(document.getElementById('root')!).render(
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') {
+    return
+  }
+ 
+  const { worker } = await import('./mocks/browser')
+ 
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  return worker.start()
+}
+enableMocking().then(() => {
+  // ReactDOM.render(<App />, rootElement)
+  createRoot(document.getElementById('root')!).render(
   
-      <BrowserRouter>
-        <App />     
-      </BrowserRouter>
-    
-  ,
+  <BrowserRouter>
+              <EmailProvider>
+                <App />     
+              </EmailProvider>
+            </BrowserRouter>
+      
+,
 )
+})
