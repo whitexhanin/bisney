@@ -79,7 +79,6 @@ export const NewCinema =   () => {
               }}
             loop={true}
             speed={1000}           
-              
             >
               
                 {totalData?.map((movie )=>(
