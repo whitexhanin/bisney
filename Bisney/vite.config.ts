@@ -13,7 +13,7 @@ export default defineConfig({
     alias: [
       { find: "@", replacement: "/src" },
       { find: "public", replacement: "/public" },
-      { find: 'node_modules', replacement: "/node_modules"}
+      { find: 'node_modules', replacement: "/node_modules"},      
     ],
 },
 })
