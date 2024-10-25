@@ -10,22 +10,19 @@ async function enableMocking() {
     return
   }
  
-  const { worker } = await import('./mocks/browser')
- 
-  // `worker.start()` returns a Promise that resolves
-  // once the Service Worker is up and ready to intercept requests.
+  const { worker } = await import('./mocks/browser') 
+
   return worker.start()
 }
-enableMocking().then(() => {
-  // ReactDOM.render(<App />, rootElement)
+
+enableMocking().then(() => {  
   createRoot(document.getElementById('root')!).render(
   
   <BrowserRouter>
               <EmailProvider>
                 <App />     
               </EmailProvider>
-            </BrowserRouter>
-      
-,
-)
+            </BrowserRouter>      
+  ,
+  )
 })
