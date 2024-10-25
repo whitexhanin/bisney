@@ -2,13 +2,10 @@ import { Link, redirect, useNavigate } from 'react-router-dom';
 import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeLabelStyle , hasLabelStyle , nextButton , checkboxlist , txt , showpassword , message , bar , value , emailtit , emailadd} from './styles.css';
 import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useContext, useEffect, useState } from 'react';
 import SignupLayout from '@/layouts/Signup';
-// import CreateEmail from '@/pages/EmailContext';
-// import {useEmailContext} from '@/components/EmailProvider';
-
-// const useEmailContext = () => useContext(EmailContext);
+import { useEmail } from '@/components/EmailProvider';
 
 const CreatePassword = () => {
-    // const {email , setEmail} = useCounterState();
+    const { email, setEmail } = useEmail();
     const [passwordData , setPasswordData] = useState({
         password: '',
         showPassword : false,
@@ -16,10 +13,6 @@ const CreatePassword = () => {
         isHasPassword : false,
         ismsgValidScore : 0,
     })
-    // const [count , setCount] = useState([]);
-    // console.log(count);
-
-    console.log(passwordData.isValid);
 
     const onClickShowPassword: MouseEventHandler<HTMLButtonElement>  = useCallback((e) => {
         setPasswordData((prev)=>{
@@ -34,19 +27,6 @@ const CreatePassword = () => {
         const regexPassword = /^(?=.*[0-9!@#$%^&*])(?=.*[a-zA-Z]).{6,}$/;       
         return regexPassword.test(password);
     };
-
-    //숫자 
-    
-    // const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/;
-    // const hasUpperCase = /[A-Z]/;
-    // const hasLowerCase = /[a-z]/;
-    // const hasLength = 6;
-
-    // const validateNumber = (password) => {
-    //     const hasNumber = /\d/;
-    //     return hasNumber.test(password);
-    // }
-    
     
     const checkPassword = (password : string)=>{
         let score = 0
@@ -93,7 +73,6 @@ const CreatePassword = () => {
 
       const navigate = useNavigate();
     const onClickgoHome = ()=>{
-        console.log('클릭');
             navigate("/home");
         }
 
@@ -104,7 +83,7 @@ const CreatePassword = () => {
                 <div className="myemail">
                     <span className={emailtit}>로그인에 사용할 이메일</span>
                     <span className={emailadd}>
-                        {/* {email} */}
+                        {email}
                     </span>
                 </div>
                 <div>
