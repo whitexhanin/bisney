@@ -3,30 +3,31 @@ import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeL
 import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useContext, useEffect, useState ,Dispatch , SetStateAction ,createContext} from 'react';
 import Checkbox from '@/components/Checkbox';
 import SignupLayout from '@/layouts/Signup';
-import { useCounterState } from '@/components/EmailProvider';
+import useSWR from 'swr';
+import { useEmail } from '@/components/EmailProvider';
+import { mutate } from 'swr';
 
-// import { useEmailContext } from '@/components/EmailProvider';
-
-// Context 생성
-// interface EmailContextType {
-//     email: string;
-//     setEmail: Dispatch<SetStateAction<string>>;
-// }
-
-// Context 생성 (기본값 제공)
-// const EmailContext = createContext<EmailContextType>({
-//     email: email,
-//     setEmail: () => {} // 타입 일치화를 위해 빈 함수 제공
-// });
-
-// const CounterContext = createContext();
+const signup = async (user) => {
+    const response = await fetch('/signup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    });
+    if (!response.ok) {
+      throw new Error('Signup failed');
+    }
+    return response.json();
+}  
 
 const CHECKBOX_ALL_LENGTH = 3;
 
 const CreateEmail = () => {
-    
-    const {email , setEmail} = useCounterState();
-    console.log(email);
+
+        const {email , setEmail} = useEmail();
+        const [localEmail, setLocalEmail] = useState(email);
+
     const [emailtext , setEmailtext] = useState();
 
 
@@ -42,17 +43,17 @@ const CreateEmail = () => {
     
 
     const onChangeEmail: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
+
         const newEmail = e.target.value;
-        // const new
-        console.log("New Email:", newEmail);               
+
         setEmailData((prev) => ({
            ...prev, 
            isValidEmail : validateEmail(newEmail),
            isHasEmail : newEmail !== '',
           }));
-        // console.log(email);
-        setEmail(newEmail); 
-        console.log(email);
+        
+        setEmail(newEmail);
+        
       }, [setEmail]);
 
     const validateEmail = (email: string) => {
@@ -98,27 +99,18 @@ const CreateEmail = () => {
         });
       }, []);
 
-
-
-    
-    
-    
-
     return (        
         <SignupLayout>
             <div className={boxcontainer}>           
-                <p className={title}>이메일을 입력하세요</p>
-                
+                <p className={title}>이메일을 입력하세요</p>                
                 <div className={inputContainer}>   
                         <input
                             type="email"
                             id="email"
                             className={inputStyle}
-                            // value={newemail}                        
+                            value={email}  
                             onChange={onChangeEmail}
-                        />
-                        {/* {children} */}
-                
+                        />                
                     <label htmlFor="email" className={`${labelStyle} ${activeLabelStyle} ${emailData.isHasEmail ? hasLabelStyle : ''}`}>이메일</label>
                 </div>         
                 <div className={checkboxlist}>               
@@ -141,7 +133,7 @@ const CreateEmail = () => {
                     </div>
                     <Link to={`${!(emailData.isCheckedAll && emailData.isValidEmail) ? "" : "/signup/create-password"}`} className={`${nextButton} ${!(emailData.isCheckedAll && emailData.isValidEmail) ? "disabled" : ""}`}>
                     다음
-                    </Link>
+                    </Link>                    
 
                 </div>
                 </div>
