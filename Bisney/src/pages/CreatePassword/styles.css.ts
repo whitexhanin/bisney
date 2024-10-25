@@ -161,7 +161,6 @@ export const emailadd = style({
     color:'#252526',
     fontWeight:'bold',
     paddingLeft:'10px',
-
 })
 
 

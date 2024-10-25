@@ -15,7 +15,6 @@ const CreateEmail = loadable(()=> import('@/pages/CreateEmail'));
 const Main = loadable(()=> import('@/pages/Main'));
 
 
-
 const App = () => {
         
     return (        

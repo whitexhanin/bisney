@@ -3,7 +3,7 @@ import  {home , logo , img} from './styles.css';
 import Recommend1 from '@/components/Recommend1';
 import RecommendList from '@/components/RecommendList';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
+ 
 const queryClient = new QueryClient();
 
 const Home  = () => {
