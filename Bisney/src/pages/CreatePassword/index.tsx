@@ -1,10 +1,14 @@
-import { Link, redirect, useNavigate } from 'react-router-dom';
+import { Link, redirect, useLocation, useNavigate } from 'react-router-dom';
 import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeLabelStyle , hasLabelStyle , nextButton , checkboxlist , txt , showpassword , message , bar , value , emailtit , emailadd} from './styles.css';
 import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useContext, useEffect, useState } from 'react';
 import SignupLayout from '@/layouts/Signup';
 import { useEmail } from '@/components/EmailProvider';
 
 const CreatePassword = () => {
+    const location = useLocation();  
+    const pathIsLogin = (location.pathname == '/login/create-password');
+    console.log(pathIsLogin);
+
     const { email, setEmail } = useEmail();
     const [passwordData , setPasswordData] = useState({
         password: '',
@@ -71,15 +75,41 @@ const CreatePassword = () => {
         })    
       },[]);
 
-      const navigate = useNavigate();
+    const navigate = useNavigate();
+
     const onClickgoHome = ()=>{
+        console.log('submit');
+        // const email = 'example@example.com';
+        fetch('/api/users', {
+        method: 'POST',
+        // headers: {
+        //     'Content-Type': 'application/json',
+        // },
+            // body: JSON.stringify({ email })
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Request failed');
+            }
+            return response.json();            
+        })
+        .then((data) => {
+            console.log('Success:', data);
             navigate("/home");
-        }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });                      
+            
+    }
+    
 
     return (
         <SignupLayout>
             <div className={boxcontainer}>
-                <p className={title}>비밀번호를 생성하세요</p>
+                <p className={title}>
+                {pathIsLogin? '비밀번호' : '비밀번호를 생성하세요'}                    
+                </p>
                 <div className="myemail">
                     <span className={emailtit}>로그인에 사용할 이메일</span>
                     <span className={emailadd}>
@@ -107,7 +137,9 @@ const CreatePassword = () => {
                         최소 숫자 1개 또는 특수 문자 1개를 반드시 포함해야 하며 총 6자(대소문자 구분) 이상이어야 합니다.
                     </div>
                 </div>                
-                <button className={`${nextButton} ${(passwordData.ismsgValidScore == 5) ? "" : "disabled"}`}  type = "button" disabled={!passwordData.isValid} onClick={onClickgoHome}>동의하고 진행하기</button>
+                <button className={`${nextButton} ${(passwordData.ismsgValidScore == 5) ? "" : "disabled"}`}  type = "button" disabled={!passwordData.isValid} onClick={onClickgoHome}>                    
+                    {pathIsLogin? '로그인' : '동의하고 진행하기'}                    
+                </button>
             </div>
           </SignupLayout>
     )
