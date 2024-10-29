@@ -17,7 +17,7 @@ const CreateEmail = () => {
   
   const {email , setEmail} = useEmail();
   const [localEmail, setLocalEmail] = useState(email);
-  const [emailtext , setEmailtext] = useState();
+  const [emailtext , setEmailtext] = useState('');
   const [emailData , setEmailData] = useState({        
       isValidEmail : false,
       step1checkarr: [] as string[],
@@ -25,6 +25,8 @@ const CreateEmail = () => {
       isCheckedAll: false, 
       isHasEmail : false,   
   });
+  console.dir(typeof(email))
+  console.log('email:',email, emailData);
 
   const onChangeEmail: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
 
@@ -100,7 +102,7 @@ const CreateEmail = () => {
                 </div> 
                 { !pathIsLogin && 
                   <div className={checkboxlist}>               
-                      <Checkbox name="" id="signup-ckall" checked={emailData.isCheckedAll} sendDataToParent={onChangeCheckboxAll}>
+                      <Checkbox name="all" id="signup-ckall" checked={emailData.isCheckedAll} sendDataToParent={onChangeCheckboxAll}>
                       전체 동의 선택
                       </Checkbox>
                       <Checkbox name="signupstep1" id="signup-ck1" sendDataToParent={onChangeIscheckbox}>
