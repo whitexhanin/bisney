@@ -3,6 +3,11 @@ import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeL
 import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useContext, useEffect, useState } from 'react';
 import SignupLayout from '@/layouts/Signup';
 import { useEmail } from '@/components/EmailProvider';
+import useSWR from 'swr';
+import { fetchers } from '@/utils/fetchers';
+import { login } from '@/libs/auth';
+
+
 
 const CreatePassword = () => {
     const location = useLocation();  
@@ -78,28 +83,44 @@ const CreatePassword = () => {
     const navigate = useNavigate();
 
     const onClickgoHome = ()=>{
-        console.log('submit');
-        // const email = 'example@example.com';
-        fetch('/api/users', {
-        method: 'POST',
-        // headers: {
-        //     'Content-Type': 'application/json',
-        // },
-            // body: JSON.stringify({ email })
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Request failed');
-            }
-            return response.json();            
-        })
-        .then((data) => {
-            console.log('Success:', data);
-            navigate("/home");
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });                      
+        login();       
+        const url = 'https://api.themoviedb.org/3/account/21570059';
+        const options = {
+            method: 'GET',                     
+            headers: {
+                accept: 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYzBmNjNmZTI4OTFkMWE4ZjIyMjgzYTdkNjJiNzMxMiIsIm5iZiI6MTczMDE2NjEwMi4zNTg3NDksInN1YiI6IjY3MGM4NjBiNGRmNTlhNjA4YzYzNzY2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-Rd6L2-PKHAmYHVPgYHvdacAs3JO9LvcPzokfb22zKU'
+            },
+            // credentials: 'include' as RequestCredentials      
+        };
+
+        fetch(url, options)
+        .then(res => res.json())
+        .then(json => navigate("/home"))
+        .catch(err => console.error(err));
+        
+        //MSW 사용시
+        // fetch('/api/users', {
+        // method: 'POST',
+        // body: JSON.stringify({
+        //     email,   
+        //     passwordData         
+        // }),
+        // credentials:'include'
+        // })
+        // .then((response) => {
+        //     if (!response.ok) {
+        //         throw new Error('Request failed');
+        //     }
+        //     return response.json();            
+        // })
+        // .then((data) => {
+        //     console.log('Success:', data);
+        //     navigate("/home");
+        // })
+        // .catch((error) => {
+        //     console.error('Error:', error);
+        // });                      
             
     }
     
