@@ -30,7 +30,7 @@ export const handlers = [
         // return HttpResponse.text(JSON.stringify('user_exists'), {
         //   status: 403,
         // })
-        return HttpResponse.text(JSON.stringify('ok'), {
+        return HttpResponse.text(JSON.stringify(request), {
           headers: {
             'Set-Cookie': 'authToken=abc-123'
           }
