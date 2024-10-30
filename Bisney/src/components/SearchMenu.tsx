@@ -6,10 +6,10 @@ const SearchMenu = () => {
     return (
         <>
             <div className={styles.menu}>
-                {/* 동일 page에 파라미터 주고 받아서 api 끌고와 작성하기 */}
-                <Link to={'/productlist/original'}>오리지널</Link>
-                <Link to={'/productlist/movie'}>영화</Link>
-                <Link to={'/productlist/tv'}>시리즈</Link>
+                {/* 동일 page에 파라미터 주고 받아서 api 끌고와 작성하기 */}                                
+                <Link to={'/productlist/trending'}>트렌드</Link>
+                <Link to={'/productlist/tv'}>인기 TV 시리즈</Link>
+                <Link to={'/productlist/movie'}>인기 Movie</Link>
             </div>
         </>
     )
