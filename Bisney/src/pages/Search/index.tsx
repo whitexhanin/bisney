@@ -5,9 +5,6 @@ import SearchMenu from "@/components/SearchMenu";
 
 const Search  = () => {
 
-    
-
-
     return (
         <>               
             <SearchInput />
