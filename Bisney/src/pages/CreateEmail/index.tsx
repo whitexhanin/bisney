@@ -102,7 +102,7 @@ const CreateEmail = () => {
                 </div> 
                 { !pathIsLogin && 
                   <div className={checkboxlist}>               
-                      <Checkbox name="all" id="signup-ckall" checked={emailData.isCheckedAll} sendDataToParent={onChangeCheckboxAll}>
+                      <Checkbox name="" id="signup-ckall" checked={emailData.isCheckedAll} sendDataToParent={onChangeCheckboxAll}>
                       전체 동의 선택
                       </Checkbox>
                       <Checkbox name="signupstep1" id="signup-ck1" sendDataToParent={onChangeIscheckbox}>
