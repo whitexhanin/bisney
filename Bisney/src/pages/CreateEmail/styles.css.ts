@@ -22,7 +22,8 @@ export const boxcontainer = style({
 export const title = style({
     fontSize:'28px',
     fontWeight : '600',
-    marginBottom:'0'
+    marginBottom:'0',
+    textAlign: 'center'
 })
 
 export const inputContainer = style({

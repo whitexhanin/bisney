@@ -17,4 +17,9 @@ globalStyle(`${checkbox} button `,{
 
 globalStyle(`${checkbox} label `,{
     whiteSpace:'nowrap',
+    '@media':{
+        'screen and (max-width:800px)': {
+            whiteSpace:'normal',
+        }
+    }
 })
