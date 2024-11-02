@@ -1,4 +1,4 @@
-import { Link, useParams, useSearchParams , useLocation } from 'react-router-dom';
+import { Link, useParams, useSearchParams , useLocation, useNavigate, useNavigation } from 'react-router-dom';
 import { boxcontainer , title , inputContainer , inputStyle ,labelStyle ,activeLabelStyle , hasLabelStyle , nextButton , checkboxlist , txt} from './styles.css';
 import { ButtonHTMLAttributes, ChangeEventHandler,  MouseEventHandler, useCallback, useContext, useEffect, useState ,Dispatch , SetStateAction ,createContext} from 'react';
 import Checkbox from '@/components/Checkbox';
@@ -13,6 +13,7 @@ const CHECKBOX_ALL_LENGTH = 3;
 const CreateEmail = () => {
   const location = useLocation();  
   const pathIsLogin = (location.pathname == '/login/create-email');
+  const navigate = useNavigate();
   console.log(pathIsLogin);
   
   const {email , setEmail} = useEmail();
@@ -84,6 +85,12 @@ const CreateEmail = () => {
         };
       });
     }, []);
+
+  const handleKeyDown = (e : React.KeyboardEvent) => {
+    if(e.key === 'Enter' && pathIsLogin && emailData.isValidEmail){      
+      navigate('/login/create-password');      
+    }
+}
   
 
     return (        
@@ -97,6 +104,7 @@ const CreateEmail = () => {
                             className={inputStyle}
                             value={email}  
                             onChange={onChangeEmail}
+                            onKeyDown={handleKeyDown}
                         />                
                     <label htmlFor="email" className={`${labelStyle} ${activeLabelStyle} ${emailData.isHasEmail ? hasLabelStyle : ''}`}>이메일</label>
                 </div> 

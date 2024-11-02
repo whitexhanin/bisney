@@ -123,6 +123,12 @@ const CreatePassword = () => {
         // });                      
             
     }
+
+    const handleKeyDown = (e : React.KeyboardEvent) => {
+        if(e.key === 'Enter' && passwordData.isValid){
+            onClickgoHome();
+        }
+    }
     
 
     return (
@@ -139,7 +145,7 @@ const CreatePassword = () => {
                 </div>
                 <div>
                     <div className={inputContainer}>
-                        <input type={passwordData.showPassword?'text' : "password"} name="" id="" value={passwordData.password} onChange={onChangePassword} className={inputStyle}/>
+                        <input type={passwordData.showPassword?'text' : "password"} name="" id="" value={passwordData.password} onChange={onChangePassword} className={inputStyle} onKeyDown={handleKeyDown}/>
                         <label htmlFor="email" className={`${labelStyle} ${activeLabelStyle} ${passwordData.isHasPassword ? hasLabelStyle : ''}`}>비밀번호</label>
                         <button type = "button" className={showpassword} onClick={onClickShowPassword}>{!passwordData.showPassword? 
                             <svg aria-hidden="true" width="24" height="18" viewBox="0 0 24 18" fill="none" xmlns="http://www.w3.org/2000/svg">
