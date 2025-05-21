@@ -14,7 +14,6 @@ const CreateEmail = () => {
   const location = useLocation();  
   const pathIsLogin = (location.pathname == '/login/create-email');
   const navigate = useNavigate();
-  console.log(pathIsLogin);
   
   const {email , setEmail} = useEmail();
   const [localEmail, setLocalEmail] = useState(email);
@@ -26,8 +25,6 @@ const CreateEmail = () => {
       isCheckedAll: false, 
       isHasEmail : false,   
   });
-  console.dir(typeof(email))
-  console.log('email:',email, emailData);
 
   const onChangeEmail: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
 

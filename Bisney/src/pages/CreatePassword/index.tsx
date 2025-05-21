@@ -7,6 +7,9 @@ import useSWR from 'swr';
 import { fetchers } from '@/utils/fetchers';
 import { login } from '@/libs/auth';
 
+import { loginUser } from '@/utils/fetchUser';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 
 
 const CreatePassword = () => {
@@ -22,6 +25,7 @@ const CreatePassword = () => {
         isHasPassword : false,
         ismsgValidScore : 0,
     })
+    const queryClient = useQueryClient();
 
     const onClickShowPassword: MouseEventHandler<HTMLButtonElement>  = useCallback((e) => {
         setPasswordData((prev)=>{
@@ -82,46 +86,34 @@ const CreatePassword = () => {
 
     const navigate = useNavigate();
 
-    const onClickgoHome = ()=>{
-        login();       
-        const url = 'https://api.themoviedb.org/3/account/21570059';
-        const options = {
-            method: 'GET',                     
-            headers: {
-                accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyYzBmNjNmZTI4OTFkMWE4ZjIyMjgzYTdkNjJiNzMxMiIsIm5iZiI6MTczMDE2NjEwMi4zNTg3NDksInN1YiI6IjY3MGM4NjBiNGRmNTlhNjA4YzYzNzY2NyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-Rd6L2-PKHAmYHVPgYHvdacAs3JO9LvcPzokfb22zKU'
-            },
-            // credentials: 'include' as RequestCredentials      
-        };
+    // const mutation = useMutation(loginUser, { onSuccess: (data) => { console.log('Login successful:', data); Cookies.set('token', data.token, { path: '/' }); queryClient.invalidateQueries('user'); }, onError: (error) => { console.error('Error logging in:', error); },});
 
-        fetch(url, options)
-        .then(res => res.json())
-        .then(json => navigate("/home"))
-        .catch(err => console.error(err));
-        
+    const onClickgoHome = ()=>{
+        // mutation.mutate({ email, passwordData});
         //MSW 사용시
-        // fetch('/api/users', {
-        // method: 'POST',
-        // body: JSON.stringify({
-        //     email,   
-        //     passwordData         
-        // }),
-        // credentials:'include'
-        // })
-        // .then((response) => {
-        //     if (!response.ok) {
-        //         throw new Error('Request failed');
-        //     }
-        //     return response.json();            
-        // })
-        // .then((data) => {
-        //     console.log('Success:', data);
-        //     navigate("/home");
-        // })
-        // .catch((error) => {
-        //     console.error('Error:', error);
-        // });                      
+        fetch('/api/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, passwordData }),                      
             
+            credentials:'include'
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Request failed');
+                }
+                return response.json();            
+            })
+            .then((data) => {
+                console.log('Success:', data);
+                login();   
+                navigate("/home");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            })                
+            .finally((data)=>{
+                console.log(data)
+            })
     }
 
     const handleKeyDown = (e : React.KeyboardEvent) => {

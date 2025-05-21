@@ -1,6 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import 'swiper/css/effect-fade';
+// import { EffectCoverflow, Pagination } from 'swiper/modules';
 
 import {newcinema , box} from "./newcinema.css";
 import { useEffect, useState } from "react";
@@ -52,6 +53,8 @@ export const NewCinema =   () => {
     }
   }, [popularData, topRatedData, upcomingData]);
   console.log(totalData);
+
+  
     if (loading) {
       return <div>로딩 중...</div>;      
     }  
@@ -61,8 +64,6 @@ export const NewCinema =   () => {
         <>                        
             <Swiper className={newcinema}
             modules={[Navigation, Pagination, Scrollbar, A11y , EffectCoverflow]}
-            spaceBetween={10}
-            slidesPerView={3}
             navigation
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
@@ -70,13 +71,45 @@ export const NewCinema =   () => {
             onSlideChange={() => console.log('slide change')}
             effect={'coverflow'}
             coverflowEffect={{
-                rotate: 50,
+                rotate: 25,
                 stretch: 0,
-                depth: 200,
+                depth: 50,
                 modifier: 1,
                 slideShadows: true,
-                scale:1,                    
-              }}
+                scale:0.8,                    
+              }} 
+              breakpoints={{
+                640: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                  coverflowEffect: { rotate: 0, stretch: 0, depth: 0, modifier: 0, slideShadows: false, scale:1, },
+
+                },
+                768: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                  coverflowEffect: {
+                    rotate: 25,
+                    stretch: 0,
+                    depth: 50,
+                    modifier: 1,
+                    slideShadows: true,
+                    scale:0.8,                    
+                  }
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                  coverflowEffect: {
+                    rotate: 25,
+                    stretch: 0,
+                    depth: 50,
+                    modifier: 1,
+                    slideShadows: true,
+                    scale:0.8,                    
+                  }
+                },
+              }}             
             loop={true}
             speed={1000}           
             >

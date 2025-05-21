@@ -4,6 +4,13 @@ import App from '@/layouts/App'
 import './index.css'
 import { BrowserRouter} from 'react-router-dom'
 import { EmailProvider } from './components/EmailProvider'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { refetchOnWindowFocus: false, }, },
+});
+  
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== 'development') {
@@ -18,9 +25,11 @@ async function enableMocking() {
 enableMocking().then(() => {  
   createRoot(document.getElementById('root')!).render(
   
-  <BrowserRouter>
+            <BrowserRouter>
               <EmailProvider>
-                <App />     
+                <QueryClientProvider client={queryClient}>             
+                  <App />     
+                </QueryClientProvider>
               </EmailProvider>
             </BrowserRouter>      
   ,

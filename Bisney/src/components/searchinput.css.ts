@@ -9,10 +9,12 @@ export const searchInput = style({
 });
 
 export const inputStyle = style({
+    height:'50px',
     padding: '8px',
     border: '1px solid #ccc',
     borderRadius: '3px',
     marginBottom: '10px',
+    fontSize:'18px',
 });
 
 export const buttonStyle = style({

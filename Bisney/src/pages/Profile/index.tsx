@@ -1,6 +1,11 @@
+import AfterLayout from "@/layouts/AfterLayout"
+
 const Profile  = () => {
     return (
-        <>Profile</>
+        <AfterLayout>
+            <>Profile</>
+            {/* {children} */}
+        </AfterLayout>        
     )
 }
 

@@ -1,8 +1,5 @@
-import React, { Dispatch, ReactNode , SetStateAction, createContext, useContext, useMemo, useState} from 'react';
-import { LayoutRouteProps } from 'react-router-dom';
+import React, { ReactNode } from 'react';
 import { logo, img , container} from './styles.css';
-import { UserProvider } from '@/components/EmailProvider';
-// import { CounterProvider, UserProvider } from '@/components/EmailProvider';
 
 type Props = {
     children: ReactNode;

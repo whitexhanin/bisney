@@ -1,6 +1,6 @@
 import * as styles from './collectionlist.css';
 import { fetchers } from "@/utils/fetchers";
-import { useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import useSWR from "swr";
 
 const CollectionList = () => {
@@ -18,11 +18,13 @@ const CollectionList = () => {
         <>
             <h2 className={styles.h2}>{(value)?.toUpperCase()}</h2>
             {/* 리스트 아이템 클릭 시 products/:id 로 이동*/}
-            <div className={styles.itemcontainer}>
+            <div className={styles.itemcontainer}>                
                 <div className={styles.itemlist}>
                     {
-                        data?.results?.map((d)=>(
-                            <div key={d.id} className={styles.item} style={{background:`url(https://image.tmdb.org/t/p/w500/${d.poster_path}) center no-repeat`,backgroundSize:'cover',}}></div>                    
+                        data?.results?.map((d)=>( 
+                            d.poster_path !== null && d.poster_path !== undefined && d.title !== null &&
+                            <Link to ={`/products/${d.id}`} key={d.id} className={styles.item} style={{ background:`url(https://image.tmdb.org/t/p/w500/${d.poster_path}) center no-repeat`,backgroundSize:'cover'}}>
+                            </Link>           
                         ))
                     }
                 </div>

@@ -42,8 +42,7 @@ const ProductDetail = ()=> {
     // const { movieInfo } = result;
 
     return (
-        <>
-        ProductDetail
+        <>        
             <div>
                 <h2>Product Detail for ID: {id}</h2>
             </div>

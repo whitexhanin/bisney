@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import loadable from "@loadable/component";
-import ProductList from "@/pages/ProductList";
+
+
 
 const Download = loadable(()=> import('@/pages/Download'));
 const Login = loadable(()=> import('@/pages/LogIn'));
@@ -13,6 +14,12 @@ const ProductDetail = loadable(()=> import('@/pages/ProductDetail'));
 const CreatePassword = loadable(()=> import('@/pages/CreatePassword'));
 const CreateEmail = loadable(()=> import('@/pages/CreateEmail'));
 const Main = loadable(()=> import('@/pages/Main'));
+const ProductList = loadable(()=> import('@/pages/ProductList'));
+const ProfileModifyList = loadable(()=> import('@/pages/ProfileModifyList'));
+const ProfileModify = loadable(()=> import('@/pages/ProfileModify'));
+const SetAvatar = loadable(()=> import('@/pages/SetAvatar'));
+
+
 
 
 const App = () => {
@@ -30,13 +37,18 @@ const App = () => {
             </Route>
             <Route path="/home" element={<Home />}/>
             <Route path="/search" element={<Search />}/>
-            <Route path="/profile" element={<Profile />}/>
+            <Route path="/profile" element={<Profile />}>                
+            </Route>
+            <Route path="/profile-modifylist" element={<ProfileModifyList />}>                
+            </Route>
+            <Route path="/profile-modifylist/:id" element={<ProfileModify/>}></Route>
             <Route path="/download" element={<Download />}/>
             <Route path="/products" element={<Products />}>            
                 <Route path=":id" element={<ProductDetail />}/>
             </Route>
             <Route path="/productlist/:id" element={<ProductList />}>                
             </Route>
+            <Route path="/setavatar" element={<SetAvatar />}/>
         </Routes>
     )
 }

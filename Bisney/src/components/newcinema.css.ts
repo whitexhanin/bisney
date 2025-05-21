@@ -7,7 +7,7 @@ export const newcinema = style({
 
 globalStyle('.swiper', {
     width: '100%',
-    height: '100%',    
+    height: '500px',    
   });
   globalStyle('.swiper-wrapper', {    
     // height:'100%',

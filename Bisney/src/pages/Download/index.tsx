@@ -1,8 +1,11 @@
+import AfterLayout from '@/layouts/AfterLayout';
 import home from '@/pages/Home';
 
 const Download  = () => {
     return (
-        <>Download</>
+        <AfterLayout>
+            <>Download</>
+        </AfterLayout>        
     )
 }
 

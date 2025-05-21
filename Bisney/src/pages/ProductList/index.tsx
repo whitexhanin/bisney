@@ -3,6 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import * as styles from './styles.css';
 import { fetchers } from "@/utils/fetchers";
 import useSWR from "swr";
+import AfterLayout from "@/layouts/AfterLayout";
+import { Back } from "@/components/Back";
 
 const ProductList = () => {
 
@@ -36,7 +38,8 @@ const ProductList = () => {
     if (!data) return <div>Loading...</div>;
 
     return(
-        <>
+        <AfterLayout>
+            <Back/>
             <h2 className={styles.h2}>{(params.id)?.toUpperCase()}</h2>
             {/* 리스트 아이템 클릭 시 products/:id 로 이동*/}
             <div className={styles.itemcontainer}>
@@ -48,7 +51,7 @@ const ProductList = () => {
                     }
                 </div>
             </div>
-        </>
+        </AfterLayout>        
     )
 }
 
