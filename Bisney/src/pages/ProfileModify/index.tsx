@@ -48,8 +48,7 @@ const ProfileModify = () => {
                         value={mydataquery.data?.nickname ?? ""}
                         readOnly
                     />
-                    <Link to="/setavatar" className={styles.useritem} style={{background: `url(${mydataquery.data.image}) center
-                    center no-repeat`,backgroundSize:'100px'}}>아바타 수정</Link>                   
+                    <Link to="/setavatar" className={styles.useritem} style={{backgroundImage: `url(${mydataquery.data.image})`}}>아바타 수정</Link>                   
                 </div>            
                 <div className={styles.settingsSection}>
                     <h3 className={styles.settingsTitle}>재생 및 설정</h3>

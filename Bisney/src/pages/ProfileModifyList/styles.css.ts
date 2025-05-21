@@ -18,6 +18,7 @@ export const useritem = style({
     width: '100px',
     borderRadius: '100%',
     transition: 'all .2s ease-in-out 0s',
+    backgroundSize:'100%',
     selectors: {
         '&:hover': {
             filter: 'brightness(.85)',

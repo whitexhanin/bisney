@@ -108,6 +108,15 @@ export const handlers = [
     // }
   }),
 
+  http.put('/api/user', async ({ request }) => {
+    const updatedUser = await request.json();
+    const userIndex = userList.findIndex(user => user.id === updatedUser.id);
+    if (userIndex !== -1) {
+      userList[userIndex] = { ...userList[userIndex], ...updatedUser };
+    }
+    return HttpResponse.json(updatedUser);
+  }),
+
   http.post('/api/login', (req) => {
     // Note that you DON'T have to stringify the JSON!
     console.log(req);  

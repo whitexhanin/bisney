@@ -16,6 +16,9 @@ export const useritem = style({
     justifyContent:'center',
     borderRadius: '100%',
     transition: 'all .2s ease-in-out 0s',
+    backgroundSize:'100%',
+    backgroundRepeat:'no-repeat',
+    backgroundPosition:'center',
     selectors: {
         '&:hover': {
             filter: 'brightness(.85)',
