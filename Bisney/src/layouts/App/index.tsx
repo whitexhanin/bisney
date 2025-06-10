@@ -48,7 +48,7 @@ const App = () => {
             </Route>
             <Route path="/productlist/:id" element={<ProductList />}>                
             </Route>
-            <Route path="/setavatar" element={<SetAvatar />}/>
+            <Route path="/setavatar/:id" element={<SetAvatar />}/>
         </Routes>
     )
 }

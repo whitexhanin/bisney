@@ -141,3 +141,20 @@ export const slider = style({
         }
     }
 })
+
+export const saveButton = style({
+    position:'fixed',
+    top:'0px',    
+    right:'10px',
+    marginTop: '20px',
+    padding: '10px 20px',
+    backgroundColor: '#02d6e8',
+    color: 'white',
+    border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    transition: 'all 0.2s ease-in-out',
+    ':hover': {
+        backgroundColor: '#00b3d1',
+    }                   
+})

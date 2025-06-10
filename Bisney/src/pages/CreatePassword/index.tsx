@@ -26,6 +26,8 @@ const CreatePassword = () => {
         ismsgValidScore : 0,
     })
     const queryClient = useQueryClient();
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const onClickShowPassword: MouseEventHandler<HTMLButtonElement>  = useCallback((e) => {
         setPasswordData((prev)=>{
@@ -88,32 +90,41 @@ const CreatePassword = () => {
 
     // const mutation = useMutation(loginUser, { onSuccess: (data) => { console.log('Login successful:', data); Cookies.set('token', data.token, { path: '/' }); queryClient.invalidateQueries('user'); }, onError: (error) => { console.error('Error logging in:', error); },});
 
-    const onClickgoHome = ()=>{
-        // mutation.mutate({ email, passwordData});
-        //MSW 사용시
-        fetch('/api/login', {
-            method: 'POST',
-            body: JSON.stringify({ email, passwordData }),                      
-            
-            credentials:'include'
-            })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Request failed');
-                }
-                return response.json();            
-            })
-            .then((data) => {
-                console.log('Success:', data);
-                login();   
-                navigate("/home");
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            })                
-            .finally((data)=>{
-                console.log(data)
-            })
+    const onClickgoHome = async () => {
+        if (!email || !passwordData.password) {
+            setError('이메일과 비밀번호를 모두 입력해주세요.');
+            return;
+        }
+
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    email, 
+                    password: passwordData.password 
+                }),
+                credentials: 'include'
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || '로그인에 실패했습니다.');
+            }
+
+            login();
+            navigate("/home");
+        } catch (error) {
+            setError(error instanceof Error ? error.message : '로그인 중 오류가 발생했습니다.');
+        } finally {
+            setIsLoading(false);
+        }
     }
 
     const handleKeyDown = (e : React.KeyboardEvent) => {
@@ -156,9 +167,15 @@ const CreatePassword = () => {
                         최소 숫자 1개 또는 특수 문자 1개를 반드시 포함해야 하며 총 6자(대소문자 구분) 이상이어야 합니다.
                     </div>
                 </div>                
-                <button className={`${nextButton} ${(passwordData.ismsgValidScore == 5) ? "" : "disabled"}`}  type = "button" disabled={!passwordData.isValid} onClick={onClickgoHome}>                    
-                    {pathIsLogin? '로그인' : '동의하고 진행하기'}                    
+                <button 
+                    className={`${nextButton} ${(passwordData.ismsgValidScore == 5) ? "" : "disabled"}`}  
+                    type="button" 
+                    disabled={!passwordData.isValid || isLoading} 
+                    onClick={onClickgoHome}
+                >                    
+                    {isLoading ? '처리중...' : pathIsLogin ? '로그인' : '동의하고 진행하기'}                    
                 </button>
+                {error && <div className={message} style={{ color: 'red' }}>{error}</div>}
             </div>
           </SignupLayout>
     )

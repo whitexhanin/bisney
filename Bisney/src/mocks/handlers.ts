@@ -18,7 +18,7 @@ const userList = [
       autoplay:'on',
       autopreview:'on',
     }},
-    {id: 'jjstar', nickname: '반짝이는나', image: '/avatar/g.png', playsetting : {
+    {id: 'jjstar', email:'user@example.com',nickname: '반짝이는나', image: '/avatar/g.png', playsetting : {
       autoplay:'on',
       autopreview:'on',
     }},
@@ -54,6 +54,28 @@ const userList = [
   let isAuthenticated = false;
 
 export const handlers = [
+
+  http.post('/api/check-user',(req, res , ctx) => {
+
+    const {identifier} = req.json();
+    const userExists = userList.some(
+      user => user.email === identifier
+    )
+    return res(
+      ctx.status(200),
+      ctx.json({
+        exists: userExists,
+        type: userExists
+          ? userList.find(
+              u => u.email === identifier 
+            )?.email === identifier
+            ? 'email'
+            : ''
+          : null,
+      })
+    )
+  }),
+
   http.post('/api/userlist', (req, res, ctx) => { 
     const { user } = req.body;
      userList.push(user);
@@ -126,6 +148,7 @@ export const handlers = [
       user: {
         id: 'abc-123',
         name: 'John Maverick',
+        email :"user@example.com"
       },
         headers: {
         'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/'

@@ -25,6 +25,7 @@ const CreateEmail = () => {
       isCheckedAll: false, 
       isHasEmail : false,   
   });
+  const [error , setError] = useState<string | null>(null);
 
   const onChangeEmail: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
 
@@ -87,7 +88,27 @@ const CreateEmail = () => {
     if(e.key === 'Enter' && pathIsLogin && emailData.isValidEmail){      
       navigate('/login/create-password');      
     }
-}
+  }
+
+  const checkUser = () => {
+    //email 중복 체크
+    fetch('/api/check-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      
+    })
+    .then(res => res.json())
+    .then(data => {
+      if(data.exists){
+        setError(data.type === 'email' ? '이미 사용중인 이메일입니다.' : '이미 사용중인 전화번호입니다.');
+      }
+    })
+    .catch(error => {
+      console.error('중복 체크 오류:', error);
+    });
+  }
   
 
     return (        
